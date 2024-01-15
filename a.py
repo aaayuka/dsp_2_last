@@ -25,3 +25,20 @@ for tr in soup.find("tbody").find_all("tr"):
         text_list.append(text)
 
 print("".join(text_list))
+
+import sqlite3
+
+path = '/content/'
+db_name = 'dsp2_last.sqlite'
+con = sqlite3.connect(path + db_name)
+con.close()
+
+con = sqlite3.connect(path + db_name)
+cur = con.cursor()
+
+sql_create_table_cars = 'CREATE TABLE dsp2_last_repo(delay_status int,　weather int);'
+
+cur.execute(sql_create_table_cars)
+
+con.close()
+
