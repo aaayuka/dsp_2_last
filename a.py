@@ -42,3 +42,68 @@ cur.execute(sql_create_table_cars)
 
 con.close()
 
+my_list = []
+data = """0
+0
+1
+0
+1
+1
+0
+0
+1
+0
+0
+2
+1
+1
+0
+1
+0
+1
+1
+1
+0
+0
+1
+1
+1
+1
+1
+0
+0
+1"""
+
+for line in data.split("\n"):
+    num = int(line)
+    my_list.append(str(num)+"\n")
+
+print("".join(my_list))
+
+
+con = sqlite3.connect(path + db_name)
+cur = con.cursor()
+
+sql_insert_many = "INSERT INTO dsp2_last_repo VALUES (?, ?);"
+
+dw_list = []
+for sc,my in zip(sc_list, my_list):
+    dw_list.append((sc,my))
+
+cur.executemany(sql_insert_many, dw_list)
+
+con.commit()
+
+con.close()
+
+con = sqlite3.connect(path + db_name)
+cur = con.cursor()
+
+sql_select = 'SELECT * FROM dsp2_last_repo;'
+
+cur.execute(sql_select)
+
+for r in cur:
+  print(r)
+
+con.close()
